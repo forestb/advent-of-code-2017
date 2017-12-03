@@ -37,7 +37,7 @@ function solvePart1(input){
     console.log(`The answer to part 1 is ${sum}.`);
 }
 
-//solvePart1(puzzleInput);
+solvePart1(puzzleInput);
 
 /**
  * Part 2
