@@ -64,7 +64,9 @@ function solvePart2(input){
 function calculateDivideByTwo(columns){
     for(var i = 0; i < columns.length; i++){
         for(var j = 0; j < columns.length; j++){
-            if( i != j){
+            var notSameNumber = (i != j);
+            
+            if(notSameNumber){
                 var larger = Math.max(columns[i], columns[j]);
                 var smaller = Math.min(columns[i], columns[j]); 
 
