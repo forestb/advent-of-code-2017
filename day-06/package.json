@@ -1,0 +1,17 @@
+{
+  "name": "day-06",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "hash-table": "^0.1.0",
+    "hashmap": "^2.3.0",
+    "node-unique-array": "0.0.6",
+    "object-hash": "^1.2.0"
+  }
+}
