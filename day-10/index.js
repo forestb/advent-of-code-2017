@@ -4,11 +4,17 @@
 /**
  * File IO - retrieve puzzle input
  */
+var assert = require('assert')
 var fs = require('file-system');
 var FixedArray = require("fixed-array");
 var CBuffer = require("CBuffer");
 
 const leftPad = require('left-pad')
+
+module.exports = {
+  getCalculatedDenseHash: getCalculatedDenseHash,
+  solvePart2 : solvePart2
+};
 
 function getFileContents(filename){
     return fs.readFileSync(`./puzzle-input/${filename}`, 'utf8', function (err, data) {
@@ -172,14 +178,6 @@ function getCalculatedDenseHash(sparseHash){
   return denseHash;
 }
 
-function validateDenseHashCalculation(){
-  var sampleDenseHashInput = "65 ^ 27 ^ 9 ^ 1 ^ 4 ^ 3 ^ 40 ^ 50 ^ 91 ^ 7 ^ 6 ^ 0 ^ 2 ^ 5 ^ 68 ^ 22".replace(" ", "").split("^");
-
-  var denseHashSample = getCalculatedDenseHash(sampleDenseHashInput);
-
-  console.log(...denseHashSample);
-}
-
 /**
  * Finally, the standard way to represent a Knot Hash is as a single hexadecimal string; the final output is the dense 
  * hash in hexadecimal notation. Because each number in your dense hash will be between 0 and 255 (inclusive), always 
@@ -203,25 +201,28 @@ function convertDenseHashToString(denseHash){
  /**
  * Part 2
  */
-var part2Input = { 
-  array: getInitializedArray(256), 
-  lengths: getLengthsPart2(inputPart1), 
-  currentPosition: 0, 
-  skipSize: 0 
-};
+function solvePart2(inputString){
+  var inputObject = { 
+    array: getInitializedArray(256), 
+    lengths: getLengthsPart2(inputString), 
+    currentPosition: 0, 
+    skipSize: 0 
+  };
 
-var result = 0;
+  /**
+   * Second, instead of merely running one round like you did above, run a total of 64 rounds, using the same 
+   * length sequence in each round. The current position and skip size should be preserved between rounds.
+   */
+  for(var i = 0; i < 64; i++){
+    solvePart1(inputObject);
+  }
 
-/**
- * Second, instead of merely running one round like you did above, run a total of 64 rounds, using the same 
- * length sequence in each round. The current position and skip size should be preserved between rounds.
- */
-for(var i = 0; i < 64; i++){
-  result += solvePart1(part2Input);
+  var sparseHash = inputObject.array;
+  var denseHash = getCalculatedDenseHash(sparseHash);
+  var denseHashString = convertDenseHashToString(denseHash);
+
+  return denseHashString;
 }
 
-var sparseHash = part2Input.array;
-var denseHash = getCalculatedDenseHash(sparseHash);
-var denseHashString = convertDenseHashToString(denseHash);
-
+var denseHashString = solvePart2(inputPart1);
 console.log(`Part 2: The Knot Hash of your puzzle input is ${denseHashString} - length=${denseHashString.length}.`);
