@@ -67,39 +67,18 @@ function getTravelerDisplacement(traveler){
   return summedDirectVertical + maxNorthDisplacement + maxSouthDisplacement;
 }
 
-function solvePart1(puzzleInput){
+function solvePuzzle(puzzleInput){
   var directions = puzzleInput.split(",");
   var traveler = getInitializedTraveler();
+  var displacements = [];
 
   directions.forEach(direction => {
     travel(traveler, direction);
+    displacements.push(getTravelerDisplacement(traveler));
   })
 
-  var travelerDisplacement = getTravelerDisplacement(traveler);
-
-  console.log(`Part 1: Starting where he started, you need to determine the fewest number of steps required to reach him - ${travelerDisplacement}.`);
+  console.log(`Part 1: Starting where he started, you need to determine the fewest number of steps required to reach him - ${displacements[displacements.length - 1]}.`);
+  console.log(`Part 2: How many steps away is the furthest he ever got from his starting position? - ${Math.max(...displacements)}.`);
 }
 
-solvePart1(puzzleInputFileContents);
-
- /**
- * Part 2
- */
-function solvePart2(puzzleInput){
-  var directions = puzzleInput.split(",");
-  var traveler = getInitializedTraveler();
-
-  var currentTravelerDisplacement = 0;
-  var maxTravelerDisplacement = 0;
-
-  directions.forEach(direction => {
-    travel(traveler, direction);
-
-    currentTravelerDisplacement = getTravelerDisplacement(traveler);
-    maxTravelerDisplacement = (maxTravelerDisplacement < currentTravelerDisplacement) ? currentTravelerDisplacement : maxTravelerDisplacement;
-  })
-
-  console.log(`Part 2: How many steps away is the furthest he ever got from his starting position? - ${maxTravelerDisplacement}.`);
-}
-
-solvePart2(puzzleInputFileContents);
+solvePuzzle(puzzleInputFileContents);
