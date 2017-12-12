@@ -88,20 +88,15 @@ var relatedProgramGroups = [];
 
 var programIds = Object.keys(programRelationships);
 
+outer:
 for(var i = 0; i < programIds.length; i++){
   var programId = +programIds[i];
 
   // was the program already found as part of another group?
-  var wasProgramIdFound = false;
-
-  relatedProgramGroups.forEach(relatedProgramGroup => {
-    if(relatedProgramGroup.indexOf(programId) > -1){
-      wasProgramIdFound = true;
+  for(var j = 0; j < relatedProgramGroups.length; j++){
+    if(relatedProgramGroups[j].includes(programId)){
+      continue outer;
     }
-  });
-
-  if(wasProgramIdFound){
-    continue;
   }
 
   // if program id not already within identified group
