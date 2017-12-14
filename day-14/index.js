@@ -3,10 +3,20 @@
 
 var day10 = require('../day-10/index');
 var helpers = require('../helpers');
-var extensions = require('../extensions');
 
 var inputExample = "flqrgnkx";
 var input = "ljoxqyyw";
+
+/**
+ * Helpers
+ */
+String.prototype.paddingLeft = function (paddingValue) {
+  return String(paddingValue + this).slice(-paddingValue.length);
+};
+
+function onlyUnique(value, index, self) {
+  return self.indexOf(value) === index;
+}
 
 /**
  *  Part 1 Helpers
@@ -128,12 +138,10 @@ function solvePart2() {
 
   var currentCount = 0;
 
-  // Note: I don't love this; because we sweep from left -> right, top -> bottom we may generate a new number
+  // Note: I don't love this; because we sweet from left -> right, top -> bottom we may generate a new number
   // because the neighbor simply hasn't been found yet. After initializing the grid, we pass through it multiple
   // times, grabbing the smallest neighbor, and then updating current to that smallest neighbor
-  var contrivedLoopCounter = 128;
-
-  for (var i = 0; i < contrivedLoopCounter; i++) {
+  for (var i = 0; i < 128; i++) {
     currentCount = processRows(rows);
   }
 
