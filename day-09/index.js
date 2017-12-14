@@ -7,15 +7,15 @@
 var fs = require('file-system');
 
 function getFileContents(filename){
-    return fs.readFileSync(`./puzzle-input/${filename}`, 'utf8', function (err, data) {
+    return fs.readFileSync(`../puzzle-input/${filename}`, 'utf8', function (err, data) {
         if (err) {
           return console.log(err);
         }
       });
 }
 
-var part1 = getFileContents("part1.txt");
-var part1example = getFileContents("part1example.txt");
+var part1 = getFileContents("day-09-part1.txt");
+var part1example = getFileContents("day-09-part1-example.txt");
 
 /**
  * Part 1 Example(s)

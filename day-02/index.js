@@ -7,7 +7,7 @@ var fs = require('file-system');
  * Part 1
  */
 // Read puzzle file contents
-var puzzleInput = fs.readFileSync('./puzzle-input/part1.txt', 'utf8', function (err, data) {
+var puzzleInput = fs.readFileSync('../puzzle-input/day-02-part1.txt', 'utf8', function (err, data) {
   if (err) {
     return console.log(err);
   }

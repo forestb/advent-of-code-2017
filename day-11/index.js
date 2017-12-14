@@ -7,14 +7,14 @@
 var fs = require('file-system');
 
 function getFileContents(filename){
-    return fs.readFileSync(`./puzzle-input/${filename}`, 'utf8', function (err, data) {
+    return fs.readFileSync(`../puzzle-input/${filename}`, 'utf8', function (err, data) {
         if (err) {
           return console.log(err);
         }
       });
 }
 
-var puzzleInputFileContents = getFileContents("part1.txt");
+var puzzleInputFileContents = getFileContents("day-11-part1.txt");
 
 var example1 = "ne,ne,ne";
 var example2 = "ne,ne,sw,sw";

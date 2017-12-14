@@ -79,7 +79,7 @@ solvePart1(347991);
 // Table of n, a(n) for n = 1..961
 var fs = require('file-system');
 
-var answerKey = fs.readFileSync('./puzzle-input/part2-square-spiral-of-sums.txt', 'utf8', function (err, data) {
+var answerKey = fs.readFileSync('../puzzle-input/day-03-part2-square-spiral-of-sums.txt', 'utf8', function (err, data) {
     if (err) {
       return console.log(err);
     }

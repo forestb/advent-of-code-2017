@@ -9,6 +9,7 @@
   "license": "ISC",
   "dependencies": {
     "CBuffer": "^2.0.0",
+    "convert-hex": "^0.1.0",
     "file-system": "^2.2.2",
     "fixed-array": "^1.0.0",
     "install": "^0.10.2",

@@ -17,7 +17,7 @@ function returnValueIfSame(a, b){
  * Part 1
  */
 // Read puzzle file contents
-var inputPart1 = fs.readFileSync('./puzzle-input/part1.txt', 'utf8', function (err, data) {
+var inputPart1 = fs.readFileSync('../puzzle-input/day-01-part1.txt', 'utf8', function (err, data) {
   if (err) {
     return console.log(err);
   }

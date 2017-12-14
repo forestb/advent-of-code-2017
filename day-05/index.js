@@ -7,13 +7,13 @@ var fs = require('file-system');
  * Puzzle input parsing
  */
 // Read puzzle file contents
-var puzzleInputSample = fs.readFileSync('./puzzle-input/part1example.txt', 'utf8', function (err, data) {
+var puzzleInputSample = fs.readFileSync('../puzzle-input/day-05-part1-example.txt', 'utf8', function (err, data) {
     if (err) {
       return console.log(err);
     }
   });
 
-var puzzleInput = fs.readFileSync('./puzzle-input/part1.txt', 'utf8', function (err, data) {
+var puzzleInput = fs.readFileSync('../puzzle-input/day-05-part1.txt', 'utf8', function (err, data) {
   if (err) {
     return console.log(err);
   }

@@ -13,21 +13,20 @@ const leftPad = require('left-pad')
 
 module.exports = {
   getCalculatedDenseHash: getCalculatedDenseHash,
-  solvePart2 : solvePart2
+  solveDay10Part2 : solveDay10Part2,
+  calculateKnotHash : calculateKnotHash
 };
 
-function getFileContents(filename){
-    return fs.readFileSync(`./puzzle-input/${filename}`, 'utf8', function (err, data) {
-        if (err) {
-          return console.log(err);
-        }
-      });
-}
+// function getFileContents(filename){
+//     return fs.readFileSync(`../puzzle-input/${filename}`, 'utf8', function (err, data) {
+//         if (err) {
+//           return console.log(err);
+//         }
+//       });
+// }
 
-var inputPart1 = getFileContents("part1.txt");
-var inputPart1example = getFileContents("part1example.txt");
-var inputPart2 = getFileContents("part2.txt");
-var inputPart2example = getFileContents("part2example.txt");
+// var inputPart1 = getFileContents("day-10-part1.txt");
+// var inputPart1example = getFileContents("day-10-part1-example.txt");
 
 /**
  * Helper(s)
@@ -76,6 +75,17 @@ function getLengthsPart2(puzzleInput){
   return a;
 }
 
+function getLengthsRawInput(input){
+  // For example, if you are given 1,2,3, your final sequence of lengths should be 49,44,50,44,51,17,31,73,47,23
+  var a = [];
+  
+  input.split("").forEach(character => {
+    a.push(character.charCodeAt(0));
+  });
+
+  return a;
+}
+
 function reverseSubArray(a, indexStart, length){
   if(length == 0){
     return;
@@ -119,7 +129,7 @@ function reverseSubArray(a, indexStart, length){
 /**
  * Part 1
  */
-function solvePart1(input){
+function solveDay10Part1(input){
   input.lengths.forEach(length =>{
     // Reverse the order of that length of elements in the list, starting with the element at the current position.
     reverseSubArray(input.array, input.currentPosition, length);
@@ -136,15 +146,15 @@ function solvePart1(input){
   return solution;
 }
 
-var part1Input = { 
-  array: getInitializedArray(256), 
-  lengths: getLengthsPart1(inputPart1), 
-  currentPosition: 0, 
-  skipSize: 0 
-};
+// var part1Input = { 
+//   array: getInitializedArray(256), 
+//   lengths: getLengthsPart1(inputPart1), 
+//   currentPosition: 0, 
+//   skipSize: 0 
+// };
 
-var solutionPart1 = solvePart1(part1Input);
-console.log(`Part 1: ${solutionPart1} is the result of multiplying the first two numbers in the list.`);
+//var solutionPart1 = solveDay10Part1(part1Input);
+//console.log(`Part 1: ${solutionPart1} is the result of multiplying the first two numbers in the list.`);
 
  /**
  * Part 2 Helper(s)
@@ -201,7 +211,7 @@ function convertDenseHashToString(denseHash){
  /**
  * Part 2
  */
-function solvePart2(inputString){
+function solveDay10Part2(inputString){
   var inputObject = { 
     array: getInitializedArray(256), 
     lengths: getLengthsPart2(inputString), 
@@ -214,7 +224,7 @@ function solvePart2(inputString){
    * length sequence in each round. The current position and skip size should be preserved between rounds.
    */
   for(var i = 0; i < 64; i++){
-    solvePart1(inputObject);
+    solveDay10Part1(inputObject);
   }
 
   var sparseHash = inputObject.array;
@@ -224,5 +234,29 @@ function solvePart2(inputString){
   return denseHashString;
 }
 
-var denseHashString = solvePart2(inputPart1);
-console.log(`Part 2: The Knot Hash of your puzzle input is ${denseHashString} - length=${denseHashString.length}.`);
+function calculateKnotHash(input){
+  var inputObject = { 
+    array: getInitializedArray(256), 
+    lengths: getLengthsPart2(input), 
+    //lengths: getLengthsRawInput(input), 
+    currentPosition: 0, 
+    skipSize: 0 
+  };
+
+  /**
+   * Second, instead of merely running one round like you did above, run a total of 64 rounds, using the same 
+   * length sequence in each round. The current position and skip size should be preserved between rounds.
+   */
+  for(var i = 0; i < 64; i++){
+    solveDay10Part1(inputObject);
+  }
+
+  var sparseHash = inputObject.array;
+  var denseHash = getCalculatedDenseHash(sparseHash);
+  var denseHashString = convertDenseHashToString(denseHash);
+
+  return denseHashString;
+}
+
+//var denseHashString = solveDay10Part2(inputPart1);
+//console.log(`Part 2: The Knot Hash of your puzzle input is ${denseHashString} - length=${denseHashString.length}.`);
