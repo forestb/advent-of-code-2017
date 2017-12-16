@@ -14,7 +14,9 @@ module.exports = {
     Hex2Bin : Hex2Bin,
     Hex2Dec : Hex2Dec,
 
-    Hex2Bin : Hex2Bin
+    Hex2Bin : Hex2Bin,
+
+    GetFileContentsSync : GetFileContentsSync
 };
 
 // Useful Functions
@@ -38,3 +40,13 @@ function Hex2Bin(n){if(!checkHex(n))return 0;return parseInt(n,16).toString(2)}
 function Hex2Dec(n){if(!checkHex(n))return 0;return parseInt(n,16).toString(10)}
 
 function Hex2Bin(n){if(!checkHex(n))return 0;return parseInt(n,16).toString(2)};
+
+var fs = require('fs');
+
+function GetFileContentsSync(filepath){
+    return fs.readFileSync(`${filepath}`, 'utf8', function (err, data) {
+        if (err) {
+          return console.log(err);
+        }
+      });
+}
