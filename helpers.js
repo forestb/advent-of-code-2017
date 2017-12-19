@@ -17,7 +17,8 @@ module.exports = {
     Hex2Bin: Hex2Bin,
 
     GetFileContentsSync: GetFileContentsSync,
-    Clone : Clone
+    Clone : Clone,
+    IsAlpha : IsAlpha
 };
 
 // Useful Functions
@@ -55,3 +56,8 @@ function GetFileContentsSync(filepath) {
 function Clone(a) {
     return JSON.parse(JSON.stringify(a));
 }
+
+function IsAlpha(s) {
+    return s != null &&
+      ((s.charCodeAt() >= 65 && s.charCodeAt() <= 90) || (s.charCodeAt() >= 97 && s.charCodeAt() <= 122));
+  }
