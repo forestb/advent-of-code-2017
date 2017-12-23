@@ -197,4 +197,4 @@ function solvePart2() {
   console.log(`Once both of your programs have terminated (regardless of what caused them to do so), how many times did program 1 send a value? - ${system.program[1].sndCount}`);
 }
 
-solvePart2();
+//solvePart2();

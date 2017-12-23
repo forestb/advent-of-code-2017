@@ -1,0 +1,4 @@
+set X Y
+sub X Y
+mul X Y
+jnz X Y
