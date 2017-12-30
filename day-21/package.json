@@ -1,0 +1,17 @@
+{
+  "name": "day-21",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "array2d": "0.0.5",
+    "console-sync": "0.0.1",
+    "elapsed-time": "0.0.1",
+    "util": "^0.10.3"
+  }
+}
