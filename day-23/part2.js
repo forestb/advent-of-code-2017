@@ -178,6 +178,8 @@ function solvePart2() {
     i++;
   }
 
+  console.log(`Part 1: If you run the program (your puzzle input), how many times is the mul instruction invoked? - ${system.program[0].mulCount}.`);
+
   // The coprocessor's ultimate goal is to determine the final value left in register 
   // h once the program completes. Technically, if it had that... it wouldn't even need 
   // to run the program.
