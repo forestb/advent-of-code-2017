@@ -137,7 +137,7 @@ function solvePart2() {
   console.log("Part 2 will take some time - be patient or close the program.");
   var et = ElapsedTime.new().start();
 
-  var puzzleInput = { instructions: helpers.GetFileContentsSync("../puzzle-input/day-23-part1.txt").split("\r\n") };
+  var puzzleInput = { instructions: helpers.GetFileContentsSync("../puzzle-input/day-23-part2.txt").split("\r\n") };
   // var puzzleInput = { instructions: helpers.GetFileContentsSync("../puzzle-input/day-23-part1-example.txt").split("\r\n") };
 
   var system = {
