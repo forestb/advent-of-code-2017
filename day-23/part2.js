@@ -57,6 +57,8 @@ function jnz(system, program, x, y) {
  * 
  */
 function initializeRegisters(puzzleInput, registers) {
+  // registers["a"] = 0;
+
   puzzleInput.instructions.forEach(instruction => {
 
     // initialize registers
@@ -98,6 +100,10 @@ function processInstruction(system, program, instructions) {
   }
 
   var instruction = instructions[program.currentInstruction];
+
+  printSync(instruction);
+
+
   var instructionComponents = instruction.split(" ");
 
   var instructionType = instructionComponents[0];
@@ -121,12 +127,15 @@ function processInstruction(system, program, instructions) {
   else if (instructionType == "jnz") {
     jnz(system, program, instructionX, instructionY);
   }
-  else if(instructionType == "nop"){
+  else if (instructionType == "nop") {
     nop(system, program);
   }
   else {
     console.log(`Invalid instruction found: ${instructionType}`)
   }
+
+  printSync(program.registers);
+  printNewline();
 
   if (program.currentInstruction >= instructions.length) {
     program.isComplete = true;
@@ -135,6 +144,7 @@ function processInstruction(system, program, instructions) {
 
 function solvePart2() {
   console.log("Part 2 will take some time - be patient or close the program.");
+  printNewline();
   var et = ElapsedTime.new().start();
 
   var puzzleInput = { instructions: helpers.GetFileContentsSync("../puzzle-input/day-23-part2.txt").split("\r\n") };
@@ -150,7 +160,7 @@ function solvePart2() {
 
   // ignore commented out instructions
   puzzleInput.instructions.forEach(instruction => {
-    if(!instruction.startsWith("//")){
+    if (!instruction.startsWith("//")) {
       instructions.push(instruction);
     }
   });
@@ -164,18 +174,23 @@ function solvePart2() {
   // The debug mode switch is wired directly to register a. You flip the switch, 
   // which makes register a now start at 1 when the program is executed.
   // system.program[0].registers["a"] = 1;
-  system.program[0].registers["a"] = 0;
+  system.program[0].registers["a"] = 1;
 
   // Process each instruction synchronously
   var i = 0;
 
-  while (!(system.program[0].isComplete)) {
-    if (i != 0 && i % 10000000 == 0) {
-      console.log(`Part 2: ${et.getValue()} elapsed - ${i} instructions processed.  Still working...`);
-    }
+  // todo - only process 100 instructions
+  // while (!(system.program[0].isComplete)) {
+  //   if (i != 0 && i % 10000000 == 0) {
+  //     console.log(`Part 2: ${et.getValue()} elapsed - ${i} instructions processed.  Still working...`);
+  //   }
 
+  //   processInstruction(system, system.program[0], instructions);
+  //   i++;
+  // }
+
+  for (var i = 0; i < 20; i++) {
     processInstruction(system, system.program[0], instructions);
-    i++;
   }
 
   console.log(`Part 1: If you run the program (your puzzle input), how many times is the mul instruction invoked? - ${system.program[0].mulCount}.`);
@@ -187,3 +202,24 @@ function solvePart2() {
 }
 
 solvePart2();
+
+function printSync(message) {
+  require('console-sync');
+  // console.log('count: %d', message);
+  
+
+  if(isObject(message)){
+    message = JSON.stringify(message);
+  }
+
+  process.stdout.write(`${message}\r\n`);
+  // console.log(message);
+}
+
+function printNewline(){
+  process.stdout.write(`\r\n`);
+}
+
+function isObject(a) {
+  return (!!a) && (a.constructor === Object);
+};
