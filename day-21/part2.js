@@ -78,21 +78,6 @@ function convertGridToString(grid) {
   return s.substr(0, s.length - 1);
 }
 
-function printGrid(grid) {
-  require('console-sync');
-
-  grid.forEach(row => {
-    console.log(row);
-  });
-
-  console.log("");
-}
-
-function printAsync(s) {
-  require('console-sync');
-  console.log(s);
-}
-
 function breakPixels(grid, rules) {
   var grids = [];
   var gridSize = Array2D.width(grid);
@@ -150,7 +135,7 @@ function joinGrids(grids) {
         // grid = Array2D.glue(grid, grids[index], i, j);
       }
 
-      printGrid(grid);
+      // printGrid(grid);
 
       index++;
     }
@@ -164,45 +149,30 @@ function solve() {
   var input = helpers.GetFileContentsSync("../puzzle-input/day-21-part1.txt");
   //var input = helpers.GetFileContentsSync("../puzzle-input/day-21-part1-example.txt");
   var rules = initializeRules(input);
+
   var grid = convertStringToGrid(".#./..#/###");
   var onCount = 0;
 
-  var blockCounts = {};
-
-  var iterationCount = 3;
+  var iterationCount = 5;
 
   var et = ElapsedTime.new().start();
 
-  for (var i = 1; i <= iterationCount; i++) {
-    onCount = convertGridToString(grid).split("#").length - 1;
-    
-    blockCounts = {};
-    printAsync(`Iteration ${i}...`);
+  for (var i = 1; i <= iterationCount; i++) {   
+    var blockCounts = {};
+    // printAsync(`Iteration ${i}...`);
+    console.log(`Iteration ${i}...`);
 
     var brokenGrids = breakPixels(grid);
     var convertedGrids = [];
 
     brokenGrids.forEach(grid => {
       var convertedGrid = convertPixels(grid, rules);
-
-      // if (blockCounts[convertedGrid] == null) {
-      //   blockCounts[convertedGrid] = { count: 1, blocks: convertGridToString(convertedGrid), onCount: convertGridToString(convertedGrid).split("#").length - 1 };
-      // }
-      // else {
-      //   blockCounts[convertedGrid].count++;
-      // }
-
       convertedGrids.push(convertedGrid);
     });
 
-    // printAsync(Object.values(blockCounts));
-
-    grid = joinGrids(convertedGrids);
-
-    printAsync(`Iteration ${i} complete - ${onCount} are on.`);
-    printAsync(`Height: ${Array2D.height(grid)}, Width: ${Array2D.width(grid)}`);
-    //printGrid(grid);    
-    // console.log(`${et.getValue()} elapsed. Still working...`);
+    grid = joinGrids(convertedGrids);  
+    console.log(`${et.getValue()} elapsed. Still working...`);
+    onCount = convertGridToString(grid).split("#").length - 1;
   }
 
   console.log(`Part 2: How many pixels stay on after 18 iterations? - ${onCount}`);
