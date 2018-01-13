@@ -11,6 +11,11 @@ const util = require('util');
 // https://www.npmjs.com/package/array2d#features--quick-reference
 const Array2D = require('array2d');
 
+// profiling
+// https://www.codementor.io/codementorteam/nodejs-profiling-build-a-high-performance-app-babjg4jf9
+// node --prof server.js
+// node --prof-process isolate-0x101804a00-v8.log
+
 /**
  * Part 1
  */
@@ -153,7 +158,7 @@ function solve() {
   var grid = convertStringToGrid(".#./..#/###");
   var onCount = 0;
 
-  var iterationCount = 5;
+  var iterationCount = 12;
 
   var et = ElapsedTime.new().start();
 
