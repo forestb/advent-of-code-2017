@@ -160,10 +160,19 @@ function solvePart2() {
 
   // ignore commented out instructions
   puzzleInput.instructions.forEach(instruction => {
-    if (!instruction.startsWith("//")) {
+    if (instruction.startsWith("//")) {
+      // printSync("Got here");
+    }
+    else {
       instructions.push(instruction);
     }
   });
+
+  // instructions.forEach(instruction => {
+  //   printSync(instruction);
+  // });
+  // return;
+  // return;
 
   console.log(`Instruction count: ${instructions.length}`);
 
@@ -189,7 +198,9 @@ function solvePart2() {
   //   i++;
   // }
 
-  for (var i = 0; i < 20; i++) {
+  for (var i = 0; i < 100; i++) {
+  // while (!(system.program[0].isComplete)) {
+    var x = 0;
     processInstruction(system, system.program[0], instructions);
   }
 
@@ -206,9 +217,9 @@ solvePart2();
 function printSync(message) {
   require('console-sync');
   // console.log('count: %d', message);
-  
 
-  if(isObject(message)){
+
+  if (isObject(message)) {
     message = JSON.stringify(message);
   }
 
@@ -216,7 +227,7 @@ function printSync(message) {
   // console.log(message);
 }
 
-function printNewline(){
+function printNewline() {
   process.stdout.write(`\r\n`);
 }
 
