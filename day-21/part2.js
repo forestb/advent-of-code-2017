@@ -130,6 +130,8 @@ function joinGrids(grids) {
         // Note: This is a bit of a pain; it appears the library requires grids to be rectangular and fills
         // empty positions with 'null'.  If then a value is "glued" to those coordinates, the nulls are pushed over
         // and down then extending the rectangle even more.  We need to use the "paste" function instead, for these situations
+        // todo: Most of the time is spent 
+        // todo -> replace this logic with logic that rebuilds the grid as a string, and then converts the string to a grid, if necessary...
         if(!isInBounds){
           grid = Array2D.glue(grid, grids[index], i, j);
         }
