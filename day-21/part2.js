@@ -109,17 +109,19 @@ function joinGrids(grids) {
     return grids[0];
   }
 
+  console.log(grids.length);
+
   // stitch grids together
   var index = 0;
-  var count = Math.sqrt(grids.length);
+  var sqrt = Math.sqrt(grids.length);
 
   var width = Array2D.width(grids[0]);
   var height = Array2D.height(grids[0]);
 
   var grid = null;
 
-  for (var i = 0; i < height * count; i += height) {
-    for (var j = 0; j < width * count; j += width) {
+  for (var i = 0; i < height * sqrt; i += height) {
+    for (var j = 0; j < width * sqrt; j += width) {
       if (grid == null) {
         grid = grids[index];
       }
@@ -138,8 +140,6 @@ function joinGrids(grids) {
         else{
           grid = Array2D.paste(grid, grids[index], i, j);
         }
-
-        // grid = Array2D.glue(grid, grids[index], i, j);
       }
 
       // printGrid(grid);
@@ -148,7 +148,7 @@ function joinGrids(grids) {
     }
   }
 
-  grid = Array2D.crop(grid, 0, 0, count * width, count * height);
+  grid = Array2D.crop(grid, 0, 0, sqrt * width, sqrt * height);
   return grid;
 }
 
@@ -160,7 +160,7 @@ function solve() {
   var grid = convertStringToGrid(".#./..#/###");
   var onCount = 0;
 
-  var iterationCount = 12;
+  var iterationCount = 5;
 
   var et = ElapsedTime.new().start();
 
@@ -177,7 +177,10 @@ function solve() {
       convertedGrids.push(convertedGrid);
     });
 
+    // console.log(...convertedGrids);
+
     grid = joinGrids(convertedGrids);  
+
     console.log(`${et.getValue()} elapsed. Still working...`);
     onCount = convertGridToString(grid).split("#").length - 1;
   }
