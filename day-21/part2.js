@@ -104,55 +104,11 @@ function breakPixels(grid, rules) {
 }
 
 function convertPixels(grid, rules) {
-  return convertStringToGrid(rules[convertGridToString(grid)]);
-}
+  var gridAsString = convertGridToString(grid);
 
-function joinGrids(grids) {
-  if (grids.length == 1) {
-    return grids[0];
-  }
+  var ruleToApply = rules[gridAsString];
 
-  console.log(grids.length);
-
-  // stitch grids together
-  var index = 0;
-  var sqrt = Math.sqrt(grids.length);
-
-  var width = Array2D.width(grids[0]);
-  var height = Array2D.height(grids[0]);
-
-  var grid = null;
-
-  for (var i = 0; i < height * sqrt; i += height) {
-    for (var j = 0; j < width * sqrt; j += width) {
-      if (grid == null) {
-        grid = grids[index];
-      }
-      else {
-        var isInBounds = Array2D.inBounds(grid, i, j);
-        var currentValue = Array2D.get(grid, i, j);
-
-        // Note: This is a bit of a pain; it appears the library requires grids to be rectangular and fills
-        // empty positions with 'null'.  If then a value is "glued" to those coordinates, the nulls are pushed over
-        // and down then extending the rectangle even more.  We need to use the "paste" function instead, for these situations
-        // todo: Most of the time is spent 
-        // todo -> replace this logic with logic that rebuilds the grid as a string, and then converts the string to a grid, if necessary...
-        if(!isInBounds){
-          grid = Array2D.glue(grid, grids[index], i, j);
-        }
-        else{
-          grid = Array2D.paste(grid, grids[index], i, j);
-        }
-      }
-
-      // printGrid(grid);
-
-      index++;
-    }
-  }
-
-  grid = Array2D.crop(grid, 0, 0, sqrt * width, sqrt * height);
-  return grid;
+  return convertStringToGrid(ruleToApply);
 }
 
 function joinGridStrings(grids){
@@ -205,7 +161,7 @@ function solve() {
   var grid = convertStringToGrid(".#./..#/###");
   var onCount = 0;
 
-  var iterationCount = 13;
+  var iterationCount = 5;
 
   var et = ElapsedTime.new().start();
 
@@ -217,14 +173,14 @@ function solve() {
     var brokenGrids = breakPixels(grid);
     var convertedGrids = [];
 
+    // for each broken grid
     brokenGrids.forEach(grid => {
+      // converts grids to strings, finds their conversion, and converts them back to grids
       var convertedGrid = convertPixels(grid, rules);
       convertedGrids.push(convertedGrid);
     });
 
-    // console.log(...convertedGrids);
-
-    // grid = joinGrids(convertedGrids);  
+    // convert broken strings to unified grid
     grid = joinGridStrings(convertedGrids);
 
     console.log(`${et.getValue()} elapsed. Still working...`);
