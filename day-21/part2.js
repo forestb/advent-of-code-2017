@@ -91,8 +91,11 @@ function breakPixels(grid, rules) {
   // Otherwise, the size is evenly divisible by 3; break the pixels up into 3x3 squares
   var offset = (gridSize % 2 == 0 ? 2 : 3);
 
-  for (var i = 0; i < Array2D.height(grid); i += offset) {
-    for (var j = 0; j < Array2D.width(grid); j += offset) {
+  var height = Array2D.height(grid);
+  var width = Array2D.width(grid);
+
+  for (var i = 0; i < height; i += offset) {
+    for (var j = 0; j < width; j += offset) {
       grids.push(Array2D.crop(grid, i, j, offset, offset));
     }
   }
@@ -202,7 +205,7 @@ function solve() {
   var grid = convertStringToGrid(".#./..#/###");
   var onCount = 0;
 
-  var iterationCount = 18;
+  var iterationCount = 13;
 
   var et = ElapsedTime.new().start();
 
