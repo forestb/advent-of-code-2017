@@ -161,7 +161,7 @@ function solve() {
   var grid = convertStringToGrid(".#./..#/###");
   var onCount = 0;
 
-  var iterationCount = 5;
+  var iterationCount = 18;
 
   var et = ElapsedTime.new().start();
 
