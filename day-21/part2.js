@@ -152,15 +152,57 @@ function joinGrids(grids) {
   return grid;
 }
 
+function joinGridStrings(grids){
+  if (grids.length == 1) {
+    return grids[0];
+  }
+
+  // the new, composed grid will contain the sqrt of the number of grids to combin
+  var gridsToCombineWidthCount = Math.sqrt(grids.length);
+  var gridsToCombineHeightCount = Math.sqrt(grids.length);
+
+  var unitGridWidth = Array2D.width(grids[0]);
+  var unitGridHeight = Array2D.height(grids[0]);
+
+  // loop through the number of grids to collect
+  // for each of those grids, append all of that grids rows
+  // return that as a string
+  var composedGrid = [];
+
+  // process this many sets of rows of grids
+  for(var size = 0; size < gridsToCombineHeightCount; size++){
+
+    // select all the grids to process for each row
+    var gridsToProcess = [];
+
+    for(var i = 0; i < gridsToCombineWidthCount; i++){
+      gridsToProcess.push(grids.shift());
+    }
+    
+    // for each grid to process, process each of its rows
+    for(var i = 0; i < unitGridHeight; i++){
+      var tempGridRow = [];
+
+      gridsToProcess.forEach(grid => {
+        tempGridRow = tempGridRow.concat(grid[i]);
+      });
+
+      composedGrid.push(tempGridRow);
+    }
+  }  
+
+  return composedGrid;
+}
+
 function solve() {
   var input = helpers.GetFileContentsSync("../puzzle-input/day-21-part1.txt");
-  //var input = helpers.GetFileContentsSync("../puzzle-input/day-21-part1-example.txt");
+  // var input = helpers.GetFileContentsSync("../puzzle-input/day-21-part1-example.txt");
   var rules = initializeRules(input);
 
   var grid = convertStringToGrid(".#./..#/###");
   var onCount = 0;
 
-  var iterationCount = 5;
+  var iterationCount = 18;
 
   var et = ElapsedTime.new().start();
 
@@ -179,7 +221,8 @@ function solve() {
 
     // console.log(...convertedGrids);
 
-    grid = joinGrids(convertedGrids);  
+    // grid = joinGrids(convertedGrids);  
+    grid = joinGridStrings(convertedGrids);
 
     console.log(`${et.getValue()} elapsed. Still working...`);
     onCount = convertGridToString(grid).split("#").length - 1;
